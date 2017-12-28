@@ -25,6 +25,8 @@ def main():
 
     scheduler = sched.scheduler(time.time, time.sleep)
     priority = 1
+
+    # env vars
     delay = envutil.get_update_frequency_sec()
     sources = envutil.get_sources()
     language = envutil.get_language()

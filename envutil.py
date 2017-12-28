@@ -2,7 +2,7 @@ import os
 
 
 def get_update_frequency_sec():
-    env = os.getenv("NEWS_API_UPDATE_FREQUENCY_SEC", 500)
+    env = os.getenv("NEWS_API_UPDATE_FREQUENCY_SEC", 300)
     check_not_null(env, "NewsAPI update frequency not defined")
     return int(env)
 
