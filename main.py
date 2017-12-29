@@ -6,7 +6,7 @@ import time
 import urllib3
 
 import envutil
-from news.newsApi import NewsApi
+from news.news_api import NewsApi
 
 
 def init_logging():
