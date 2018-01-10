@@ -8,7 +8,14 @@ import urllib3
 import envutil
 from news.news_api import NewsApi
 from news.news_storage import NewsStorage
+from aggregator.aggregator import NewsAggregator
 
+
+# Global things to do:
+# TODO produce images
+# TODO post news article
+# TODO add hashtags
+# TODO store news in db
 
 def init_logging():
     # configure project logging
@@ -41,18 +48,10 @@ def main():
 
     news_api = NewsApi(sources, language, api_key)
     news_storage = NewsStorage(storage_filename, time_function)
+    news_aggregator = NewsAggregator(news_api, news_storage)
 
     def repeat():
-        articles = news_api.top()
-        articles = news_storage.filter_and_save(articles)
-
-        # timestamp_from = datetime.utcnow() - timedelta(hours=4)
-        # timestamp_from = timestamp_from.replace(microsecond=0).isoformat()
-        # articles = news_api.get(timestamp_from)
-
-        for article in articles:
-            logging.info(str(article))
-        logging.info("#" * 40)
+        news_aggregator.execute()
         scheduler.enter(delay, priority, repeat)
 
     try:
