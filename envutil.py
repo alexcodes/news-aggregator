@@ -25,6 +25,18 @@ def get_sources():
     return env
 
 
+def get_storage_filename():
+    env = os.getenv("NEWS_STORAGE_FILENAME", "storage.csv")
+    check_not_null(env, "News storage not defined")
+    return env
+
+
+def get_article_ttl_hours():
+    env = os.getenv("NEWS_ARTICLE_TTL_HOURS", 24)
+    check_not_null(env, "News article ttl not defined")
+    return int(env)
+
+
 ################################################################################
 
 

@@ -7,11 +7,12 @@ import urllib3
 
 import envutil
 from news.news_api import NewsApi
+from news.news_storage import NewsStorage
 
 
 def init_logging():
     # configure project logging
-    logging.basicConfig(format='%(asctime)s %(name)s %(levelname)-7s - %(message)s', level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s %(name)s %(levelname)-7s - %(message)s', level=logging.DEBUG)
     logging.info("Start VK_NEWS_AGGREGATOR")
 
     # configure libraries logging
@@ -31,19 +32,27 @@ def main():
     sources = envutil.get_sources()
     language = envutil.get_language()
     api_key = envutil.get_api_key()
+    storage_filename = envutil.get_storage_filename()
+    article_ttl = envutil.get_article_ttl_hours()
+
+    def time_function():
+        timestamp = (datetime.utcnow() - timedelta(hours=article_ttl)).timestamp()
+        return int(timestamp)
 
     news_api = NewsApi(sources, language, api_key)
+    news_storage = NewsStorage(storage_filename, time_function)
 
     def repeat():
         articles = news_api.top()
+        articles = news_storage.filter_and_save(articles)
 
         # timestamp_from = datetime.utcnow() - timedelta(hours=4)
         # timestamp_from = timestamp_from.replace(microsecond=0).isoformat()
         # articles = news_api.get(timestamp_from)
 
         for article in articles:
-            print(article.publishedAt, article.source, article.title, article.url)
-        print("#" * 40)
+            logging.info(str(article))
+        logging.info("#" * 40)
         scheduler.enter(delay, priority, repeat)
 
     try:
