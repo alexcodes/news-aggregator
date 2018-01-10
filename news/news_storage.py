@@ -9,7 +9,6 @@ class NewsStorage:
 
     def filter_and_save(self, articles):
         filtered = self._filter(articles)
-        logging.debug("New articles: %d", len(filtered))
         self._save(filtered)
         return filtered
 
@@ -23,7 +22,6 @@ class NewsStorage:
 
         self._remove_outdated()
         self.storage.extend(articles)
-        logging.debug("Total storage size: %d", len(self.storage))
         self._persist()
 
     def _remove_outdated(self):

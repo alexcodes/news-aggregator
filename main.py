@@ -19,7 +19,7 @@ from aggregator.aggregator import NewsAggregator
 
 def init_logging():
     # configure project logging
-    logging.basicConfig(format='%(asctime)s %(name)s %(levelname)-7s - %(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s %(levelname)-7s - %(message)s', level=logging.DEBUG)
     logging.info("Start VK_NEWS_AGGREGATOR")
 
     # configure libraries logging

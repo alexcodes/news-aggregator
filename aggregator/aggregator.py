@@ -22,6 +22,7 @@ class NewsAggregator:
             logging.info("Skip first batch")
             return
 
+        logging.info("New articles: %d", len(articles))
         for article in articles:
             self._process_article(article)
 
