@@ -1,3 +1,5 @@
+import logging
+
 import requests
 
 from news.article import Article
@@ -17,11 +19,16 @@ def is_readable(text):
     if not text:
         return True
 
-    count = 0
+    not_letter_count = 0
     for char in text:
         if not char.isalpha():
-            count += 1
-    return count != len(text)
+            not_letter_count += 1
+
+    threshold = 0.5
+    readable = not_letter_count / len(text) < threshold
+    if not readable:
+        logging.debug("Not readable: %s", text)
+    return readable
 
 
 class NewsApi:
