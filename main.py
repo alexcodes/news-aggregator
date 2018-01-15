@@ -6,13 +6,14 @@ import time
 import urllib3
 
 import envutil
+from image.image_generator import ImageGenerator
 from news.news_api import NewsApi
 from news.news_storage import NewsStorage
 from aggregator.aggregator import NewsAggregator
 
 
 # Global things to do:
-# TODO produce images
+# TODO black list of bad image_urls
 # TODO post news article
 # TODO add hashtags
 # TODO store news in db
@@ -41,6 +42,9 @@ def main():
     api_key = envutil.get_api_key()
     storage_filename = envutil.get_storage_filename()
     article_ttl = envutil.get_article_ttl_hours()
+    font_filename = envutil.get_image_font_filename()
+    default_image = envutil.get_default_image_filename()
+    image_storage_path = envutil.get_image_storage_path()
 
     def time_function():
         timestamp = (datetime.utcnow() - timedelta(hours=article_ttl)).timestamp()
@@ -48,7 +52,8 @@ def main():
 
     news_api = NewsApi(sources, language, api_key)
     news_storage = NewsStorage(storage_filename, time_function)
-    news_aggregator = NewsAggregator(news_api, news_storage)
+    image_generator = ImageGenerator(font_filename, default_image, image_storage_path)
+    news_aggregator = NewsAggregator(news_api, news_storage, image_generator)
 
     def repeat():
         news_aggregator.execute()

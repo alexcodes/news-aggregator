@@ -2,9 +2,10 @@ import logging
 
 
 class NewsAggregator:
-    def __init__(self, news_api, news_storage):
+    def __init__(self, news_api, news_storage, image_generator):
         self.news_api = news_api
         self.news_storage = news_storage
+        self.image_generator = image_generator
         self.count = 0
 
     def execute(self):
@@ -28,3 +29,4 @@ class NewsAggregator:
 
     def _process_article(self, article):
         logging.info(str(article))
+        self.image_generator.generate(article.title, article.url_to_image)

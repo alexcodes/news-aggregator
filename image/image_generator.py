@@ -1,4 +1,6 @@
 import textwrap
+import time
+import logging
 from io import BytesIO
 
 import requests
@@ -58,14 +60,32 @@ def load_image(img_filename):
 
 class ImageGenerator:
 
-    def __init__(self, font_filename, default_image):
+    def __init__(self, font_filename, default_image, path_to_save):
         self.font_filename = font_filename
         self.default_image = default_image
+        self.format = ".png"
+
+        if not path_to_save.endswith("/"):
+            path_to_save = path_to_save + "/"
+        self.path_to_save = path_to_save
 
     def generate(self, text, img_filename=None):
+        start_time = time.time()
+
         background = self._get_background(img_filename)
         foreground = self._get_text_layer(background, text)
-        return Image.alpha_composite(background, foreground)
+        image = Image.alpha_composite(background, foreground)
+        filename = self._save_image(image, text)
+
+        duration = time.time() - start_time
+        logging.debug("Generated for %.3f sec: %s", duration, filename)
+        return filename
+
+    def _save_image(self, image, text):
+        filename = str(int(time.time() * 1000)) + "_" + str(hash(text)) + self.format
+        filename = self.path_to_save + filename
+        image.save(filename)
+        return filename
 
     def _get_background(self, img_filename):
         if not img_filename:

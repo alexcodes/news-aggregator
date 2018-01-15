@@ -37,6 +37,24 @@ def get_article_ttl_hours():
     return int(env)
 
 
+def get_default_image_filename():
+    env = os.getenv("IMAGE_DEFAULT_FILENAME")
+    check_not_null(env, "Default image filename not defined")
+    return env
+
+
+def get_image_storage_path():
+    env = os.getenv("IMAGE_STORAGE_PATH", "./images/")
+    check_not_null(env, "Image storage path not defined")
+    return env
+
+
+def get_image_font_filename():
+    env = os.getenv("IMAGE_FONT_FILENAME")
+    check_not_null(env, "Image font filename not defined")
+    return env
+
+
 ################################################################################
 
 
