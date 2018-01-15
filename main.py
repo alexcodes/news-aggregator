@@ -14,7 +14,7 @@ from aggregator.aggregator import NewsAggregator
 
 # Global things to do:
 # TODO filter too small images
-# TODO black list of bad image_urls
+# TODO bad images replace by google search result
 # TODO post news article
 # TODO add hashtags
 # TODO store news in db
