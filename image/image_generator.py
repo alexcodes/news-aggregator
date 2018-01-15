@@ -50,6 +50,9 @@ def get_text_padding_top(img_size, lines_count, font_size):
 
 
 def load_image(img_filename):
+    if img_filename.startswith("//"):
+        img_filename = "http:" + img_filename
+
     if img_filename.startswith("http"):
         data = requests.get(img_filename).content
         file = BytesIO(data)
