@@ -1,15 +1,15 @@
-from datetime import datetime, timedelta
 import logging
-
 import sched
 import time
+from datetime import datetime, timedelta
+
 import urllib3
 
 import envutil
+from aggregator.aggregator import NewsAggregator
 from image.image_generator import ImageGenerator
 from news.news_api import NewsApi
 from news.news_storage import NewsStorage
-from aggregator.aggregator import NewsAggregator
 
 
 # Global things to do:
@@ -21,7 +21,7 @@ from aggregator.aggregator import NewsAggregator
 
 def init_logging():
     # configure project logging
-    logging.basicConfig(format='%(asctime)s %(levelname)-7s - %(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s %(levelname)s %(module)s:%(lineno)s - %(message)s', level=logging.DEBUG)
     logging.info("Start VK_NEWS_AGGREGATOR")
 
     # configure libraries logging
