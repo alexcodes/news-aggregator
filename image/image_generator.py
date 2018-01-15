@@ -78,14 +78,14 @@ class ImageGenerator:
         background = self._get_background(img_filename)
         foreground = self._get_text_layer(background, text)
         image = Image.alpha_composite(background, foreground)
-        filename = self._save_image(image, text)
+        filename = self._save_image(image)
 
         duration = time.time() - start_time
         logging.debug("Generated for %.3f sec: %s", duration, filename)
         return filename
 
-    def _save_image(self, image, text):
-        filename = str(int(time.time() * 1000)) + "_" + str(hash(text)) + self.format
+    def _save_image(self, image):
+        filename = str(int(time.time() * 1000)) + self.format
         filename = self.path_to_save + filename
         image.save(filename)
         return filename

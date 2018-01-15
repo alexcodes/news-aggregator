@@ -13,6 +13,7 @@ from aggregator.aggregator import NewsAggregator
 
 
 # Global things to do:
+# TODO filter too small images
 # TODO black list of bad image_urls
 # TODO post news article
 # TODO add hashtags
