@@ -21,12 +21,13 @@ from news.news_storage import NewsStorage
 
 def init_logging():
     # configure project logging
-    logging.basicConfig(format='%(asctime)s %(levelname)s %(module)s:%(lineno)s - %(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s %(name)s %(levelname)s %(module)s:%(lineno)s - %(message)s', level=logging.DEBUG)
     logging.info("Start VK_NEWS_AGGREGATOR")
 
     # configure libraries logging
     logging.getLogger("requests").setLevel(logging.WARNING)
     logging.getLogger("urllib3").setLevel(logging.WARNING)
+    logging.getLogger("PIL.PngImagePlugin").setLevel(logging.WARNING)
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
