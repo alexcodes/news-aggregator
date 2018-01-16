@@ -15,7 +15,7 @@ from news.news_storage import NewsStorage
 # Global things to do:
 # TODO filter too small images
 # TODO bad images replace by google search result
-# TODO post news article
+# TODO post news article with guid
 # TODO add hashtags
 # TODO store news in db
 

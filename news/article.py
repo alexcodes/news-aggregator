@@ -12,4 +12,4 @@ class Article:
         self.timestamp = time_utils.parse(self.published_at)
 
     def __str__(self):
-        return "{} {} {} {}".format(self.timestamp, self.published_at, self.title, self.url)
+        return "{} | {} {} {}".format(self.title, self.description, self.url, self.url_to_image)
