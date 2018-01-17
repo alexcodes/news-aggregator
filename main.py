@@ -18,6 +18,8 @@ from news.news_storage import NewsStorage
 # TODO post news article with guid
 # TODO add hashtags
 # TODO store news in db
+from vk.vk import VK
+
 
 def init_logging():
     # configure project logging
@@ -47,6 +49,8 @@ def main():
     font_filename = envutil.get_image_font_filename()
     default_image = envutil.get_default_image_filename()
     image_storage_path = envutil.get_image_storage_path()
+    vk_access_token = envutil.get_vk_access_token()
+    vk_target_group = envutil.get_vk_target_group()
 
     def time_function():
         timestamp = (datetime.utcnow() - timedelta(hours=article_ttl)).timestamp()
@@ -55,7 +59,8 @@ def main():
     news_api = NewsApi(sources, language, api_key)
     news_storage = NewsStorage(storage_filename, time_function)
     image_generator = ImageGenerator(font_filename, default_image, image_storage_path)
-    news_aggregator = NewsAggregator(news_api, news_storage, image_generator)
+    vk_api = VK(vk_access_token, vk_target_group)
+    news_aggregator = NewsAggregator(news_api, news_storage, image_generator, vk_api)
 
     def repeat():
         try:

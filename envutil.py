@@ -55,6 +55,18 @@ def get_image_font_filename():
     return env
 
 
+def get_vk_access_token():
+    env = os.getenv("VK_ACCESS_TOKEN")
+    check_not_null(env, "VK access token not defined")
+    return env
+
+
+def get_vk_target_group():
+    env = os.getenv("VK_TARGET_GROUP")
+    check_not_null(env, "VK target group not defined")
+    return env
+
+
 ################################################################################
 
 
