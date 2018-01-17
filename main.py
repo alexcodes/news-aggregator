@@ -58,7 +58,10 @@ def main():
     news_aggregator = NewsAggregator(news_api, news_storage, image_generator)
 
     def repeat():
-        news_aggregator.execute()
+        try:
+            news_aggregator.execute()
+        except Exception as e:
+            logging.error(e)
         scheduler.enter(delay, priority, repeat)
 
     try:
