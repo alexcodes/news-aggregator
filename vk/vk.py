@@ -30,11 +30,12 @@ class VK:
         upload_url = response.json()["response"]["upload_url"]
 
         # Upload image
-        response = requests.post(upload_url, files={"photo": open(img_file, "rb")})
-        response = response.json()
-        server = response["server"]
-        photo = response["photo"]
-        hash_photo = response["hash"]
+        with open(img_file, "rb") as file:
+            response = requests.post(upload_url, files={"photo": file})
+            response = response.json()
+            server = response["server"]
+            photo = response["photo"]
+            hash_photo = response["hash"]
 
         # Save photo to vk
         url = 'https://api.vk.com/method/photos.saveWallPhoto?group_id={}&server={}&photo={}&hash={}&access_token={}'
